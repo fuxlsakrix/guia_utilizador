@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Documentação Zoho Books</title>
+  <style>
+    :root {
+      --cor-primaria: #2d6cdf;
+      --cor-fundo: #f0f4f8;
+      --cor-texto: #333;
+      --cor-bloco: #ffffff;
+      --borda: 1px solid #ccc;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--cor-fundo);
+      color: var(--cor-texto);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      padding: 20px 0 10px;
+      background-color: var(--cor-primaria);
+      color: white;
+      font-size: 28px;
+    }
+
+    p {
+      color: white;
+      font-size: 20px;
+      text-align: center;
+      background-color: var(--cor-primaria);
+      margin: 0;
+      padding-bottom: 20px;
+    }
+
+    /* Menu lateral */
+    #sideMenu {
+      position: fixed;
+      top: 8px;
+      left: 16px;
+      z-index: 1000;
+    }
+
+    #menuToggle {
+      font-size: 22px;
+      background-color: var(--cor-primaria);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 14px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    #menuList {
+      list-style: none;
+      padding: 10px;
+      margin: 10px 0 0 0;
+      background-color: var(--cor-bloco);
+      border: var(--borda);
+      border-radius: 8px;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    #menuList li {
+      margin: 10px 0;
+    }
+
+    #menuList a {
+      text-decoration: none;
+      color: var(--cor-primaria);
+      font-weight: bold;
+    }
+
+    #menuList a:hover {
+      text-decoration: underline;
+    }
+
+    /* Barra de pesquisa */
+    #searchBox {
+      display: block;
+      margin: 30px auto 10px;
+      padding: 12px;
+      font-size: 18px;
+      width: 80%;
+      max-width: 800px;
+      border-radius: 8px;
+      border: var(--borda);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+    }
+
+    /* Blocos de conteúdo */
+    .content-block {
+      font-size: 18px;
+      text-align: left;
+      padding: 20px;
+      margin: 30px auto;
+      width: 90%;
+      max-width: 800px;
+      background-color: var(--cor-bloco);
+      border-radius: 12px;
+      border: var(--borda);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .content-block strong {
+      display: block;
+      font-weight: bold;
+      font-size: 22px;
+      margin-bottom: 14px;
+      color: var(--cor-primaria);
+    }
+
+    /* Imagens */
+    img.centered {
+      width: 100%;
+      max-width: 700px;
+      display: block;
+      margin: 20px auto 0;
+      border-radius: 10px;
+      border: 1px solid #aaa;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    img.centered:hover {
+      transform: scale(1.01);
+      box-shadow: 0 8px 20px rgba(45, 108, 223, 0.5);
+      z-index: 10;
+      position: relative;
+    }
+
+  #imageModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 9999;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+/* Quando o modal estiver aberto */
+#imageModal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Conteúdo do modal */
+#modalContent {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  max-width: 90%;
+  max-height: 90%;
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  animation: modalZoomIn 0.3s ease forwards;
+}
+
+/* Animação do modal */
+@keyframes modalZoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  } to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Imagem no modal */
+#modalImage {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Botão fechar */
+#closeModal {
+  position: absolute;
+  top: -4px;
+  right: -5px;
+  font-size: 38px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--cor-primaria);
+  font-weight: bold;
+  line-height: 1;
+  padding: 0 6px;
+  transition: color 0.2s;
+}
+
+#closeModal:hover {
+  color: #1a44a1;
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Modal para mostrar a imagem ampliada -->
+<div id="imageModal">
+  <div id="modalContent">
+    <img id="modalImage" src="" alt="Imagem ampliada" />
+  </div>
+</div>
+
+  <!-- Menu -->
+  <div id="sideMenu">
+    <button id="menuToggle">☰</button>
+    <ul id="menuList">
+      <li><a href="menu_principal.html">Menu</a></li>
+      <li><a href="banca.html">Banca</a></li>
+      <li><a href="itens.html">Itens</a></li>
+      <li><a href="apoio_ao_cliente.html">Apoio ao Cliente</a></li>
+      <li><a href="compras.html">Compras</a></li>
+      <li><a href="contabilista.html">Contabilista</a></li>
+      <li><a href="controlo_de_tempo.html">Controlo de Tempo</a></li>
+      <li><a href="relatorios.html">Relatórios</a></li>
+      <li><a href="vendas.html">Vendas</a></li>
+    </ul>
+  </div>
+
+  <!-- Cabeçalho -->
+  <h1>Documentação digital de apoio ao utilizador</h1>
+
+  <!-- Barra de pesquisa -->
+  <input type="text" id="searchBox" placeholder="Filtrar conteúdo por título..." />
+
+  <!-- Conteúdo -->
+  <div class="content-block" data-title="Página Documentos" id="principal">
+    <strong>Página Documentos</strong>
+    Área destinada ao armazenamento e gestão de arquivos e comprovativos usados nas transações do sistema.
+  </div>
+
+  <div class="content-block" data-title="Aba Todos os documentos" id="principal">
+    <strong>Aba Todos os documentos</strong>
+    Nesta página, o utilizador pode carregar os seus ficheiros com a respetiva
+    documentação.
+    <img src="Imagens/pagina_todos_os_documentos.png" alt="Página principal" class="centered" />
+  </div>
+
+  <div class="content-block" data-title="Aba Ficheiros" id="principal">
+    <strong>Aba Ficheiros</strong>
+    Aqui o utilizador pode digitalizar automaticamente os seus documentos.
+    <img src="Imagens/pagina_ficheiros.png" alt="Página principal" class="centered" />
+  </div>
+
+  <div class="content-block" data-title="Aba Extratos Bancários" id="principal">
+    <strong>Aba Extratos Bancários</strong>
+    Serve para carregar automaticamente extratos bancários de your a partir do e-mail.
+    <img src="Imagens/pagina_extratos_bancarios.png" alt="Página principal" class="centered" />
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Filtro da barra de pesquisa
+    const searchBox = document.getElementById('searchBox');
+    const blocks = document.querySelectorAll('.content-block');
+
+    searchBox.addEventListener('input', () => {
+      const filtro = searchBox.value.toLowerCase();
+
+      blocks.forEach(block => {
+        const titulo = block.getAttribute('data-title').toLowerCase();
+        block.style.display = titulo.includes(filtro) ? 'block' : 'none';
+      });
+    });
+
+    // Menu toggle
+    const toggleBtn = document.getElementById('menuToggle');
+    const menuList = document.getElementById('menuList');
+
+    toggleBtn.addEventListener('click', () => {
+      menuList.style.display = menuList.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Fecha o menu após clicar num link
+    document.querySelectorAll('#menuList a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuList.style.display = 'none';
+      });
+    });
+
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+
+    // Seleciona todas as imagens com classe centered
+    document.querySelectorAll('img.centered').forEach(img => {
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', () => {
+        modalImage.src = img.src;    
+        modal.classList.add('open'); 
+      });
+    });
+
+    // Fecha o modal ao clicar fora da imagem (no overlay)
+    modal.addEventListener('click', e => {
+      if (e.target === modal) {
+        modal.classList.remove('open');
+        modalImage.src = ""; // limpa a imagem ao fechar (opcional)
+      }
+    });
+  </script>
+</body>
+</html>

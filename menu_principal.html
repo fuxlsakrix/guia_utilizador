@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Documentação Zoho Books</title>
+  <style>
+    :root {
+      --cor-primaria: #2d6cdf;
+      --cor-fundo: #f4f7fb;
+      --cor-texto: #333;
+      --cor-bloco: #ffffff;
+      --borda: 1px solid #ccc;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--cor-fundo);
+      color: var(--cor-texto);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      padding: 20px 0 10px;
+      background-color: var(--cor-primaria);
+      color: white;
+      font-size: 28px;
+    }
+
+    p {
+      color: white;
+      font-size: 20px;
+      text-align: center;
+      background-color: var(--cor-primaria);
+      margin: 0;
+      padding-bottom: 20px;
+    }
+
+    /* Menu lateral */
+    #sideMenu {
+      position: fixed;
+      top: 8px;
+      left: 16px;
+      z-index: 1000;
+    }
+
+    #menuToggle {
+      font-size: 22px;
+      background-color: var(--cor-primaria);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 14px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    #menuList {
+      list-style: none;
+      padding: 10px;
+      margin: 10px 0 0 0;
+      background-color: white;
+      border: var(--borda);
+      border-radius: 8px;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    #menuList li {
+      margin: 10px 0;
+    }
+
+    #menuList a {
+      text-decoration: none;
+      color: var(--cor-primaria);
+      font-weight: bold;
+    }
+
+    #menuList a:hover {
+      text-decoration: underline;
+    }
+
+    /* Barra de pesquisa */
+    #searchBox {
+      display: block;
+      margin: 30px auto 10px;
+      padding: 12px;
+      font-size: 18px;
+      width: 80%;
+      max-width: 800px;
+      border-radius: 8px;
+      border: var(--borda);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+    }
+
+    /* Blocos de conteúdo */
+    .content-block {
+      font-size: 18px;
+      text-align: left;
+      padding: 20px;
+      margin: 30px auto;
+      width: 90%;
+      max-width: 800px;
+      background-color: var(--cor-bloco);
+      border-radius: 12px;
+      border: var(--borda);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .content-block strong {
+      display: block;
+      font-weight: bold;
+      font-size: 22px;
+      margin-bottom: 14px;
+      color: var(--cor-primaria);
+    }
+
+    /* Imagens */
+    img.centered {
+      width: 100%;
+      max-width: 700px;
+      display: block;
+      margin: 20px auto 0;
+      border-radius: 10px;
+      border: 1px solid #aaa;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    img.centered:hover {
+      transform: scale(1.01); /* aumenta 10% */
+      box-shadow: 0 8px 20px rgba(45, 108, 223, 0.5); /* sombra azul para “selecionada” */
+      z-index: 10; /* para ficar na frente */
+      position: relative; /* para z-index funcionar */
+    }
+
+    #imageModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 9999;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+/* Quando o modal estiver aberto */
+#imageModal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Conteúdo do modal */
+#modalContent {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  max-width: 90%;
+  max-height: 90%;
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  animation: modalZoomIn 0.3s ease forwards;
+}
+
+/* Animação do modal */
+@keyframes modalZoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  } to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Imagem no modal */
+#modalImage {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Botão fechar */
+#closeModal {
+  position: absolute;
+  top: -4px;
+  right: -5px;
+  font-size: 38px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--cor-primaria);
+  font-weight: bold;
+  line-height: 1;
+  padding: 0 6px;
+  transition: color 0.2s;
+}
+
+#closeModal:hover {
+  color: #1a44a1;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Modal para mostrar a imagem ampliada -->
+<div id="imageModal">
+  <div id="modalContent">
+    <img id="modalImage" src="" alt="Imagem ampliada" />
+  </div>
+</div>
+
+  <!-- Menu -->
+  <div id="sideMenu">
+    <button id="menuToggle">☰</button>
+    <ul id="menuList">
+      <li><a href="itens.html">Itens</a></li>
+      <li><a href="banca.html">Banca</a></li>
+      <li><a href="vendas.html">Vendas</a></li>
+      <li><a href="compras.html">Compras</a></li>
+      <li><a href="relatorios.html">Centro de Relatórios</a></li>
+      <li><a href="controlo_de_tempo.html">Controlo de Tempo</a></li>
+      <li><a href="contabilista.html">Contabilista</a></li>
+      <li><a href="documentos.html">Documentos</a></li>
+      <li><a href="apoio_ao_cliente.html">Apoio ao Cliente</a></li>
+    </ul>
+  </div>
+
+  <!-- Cabeçalho -->
+  <h1>Documentação digital de apoio ao utilizador</h1>
+
+  <!-- Barra de pesquisa -->
+  <input type="text" id="searchBox" placeholder="Filtrar conteúdo por título..." />
+
+  <!-- Blocos de conteúdo -->
+  <div class="content-block" data-title="O que é Zoho Books" id="zohoBooks">
+    <strong>O que é Zoho Books</strong>
+    O Zoho Books é um software de contabilidade online desenvolvido pela Zoho Corporation.
+    É uma ferramenta pensada para pequenas e médias empresas que precisam de gerir as suas
+    finanças de forma eficiente e descomplicada. Está integrada no ecossistema da
+    Zoho, o que facilita a conexão com outras ferramentas como
+    o Zoho CRM, Zoho Inventory, entre outras.
+  </div>
+
+  <div class="content-block" data-title="Página de Login" id="login">
+    <strong>Página de Login</strong>
+    Para aceder à página de Login basta clicar neste link:
+    <a href="https://accounts.zoho.com/signin?servicename=ZohoBooks&signupurl=https://www.zoho.com/books/signup/" target="_blank" rel="noopener noreferrer">Login Zoho Books</a>
+  </div>
+
+  <div class="content-block" data-title="Página Principal" id="principal">
+    <strong>Página Principal</strong>
+    Na página principal, podemos ver as informações da conta, bem como as abas
+    “Dashboard”, “Começar”, “Anúncios” e “Atualizações”. Também são exibidos o nome
+    da conta e, logo abaixo, o nome da empresa que criámos.
+    <img src="Imagens/pagina_principal.png" alt="Página principal" class="centered" />
+  </div>
+
+  <div class="content-block" data-title="Página Dashboard" id="dashboard">
+    <strong>Página Dashboard</strong>
+    Essa aba exibe informações como o total a receber, total a pagar, além de dados
+    sobre o fluxo de caixa, receitas, despesas, projetos criados, entre outros.
+    <img src="Imagens/pagina_dashboard.png" alt="Página dashboard" class="centered" />
+  </div>
+
+  <div class="content-block" data-title="Página Começar" id="comecar">
+    <strong>Página Começar</strong>
+    Essa página inclui pequenos tutoriais e dicas que ajudam na adaptação do utilizador
+    à ferramenta, proporcionando uma melhor experiência de uso.
+    <img src="Imagens/pagina_comecar.png" alt="Página começar" class="centered" />
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Filtro da barra de pesquisa
+    const searchBox = document.getElementById('searchBox');
+    const blocks = document.querySelectorAll('.content-block');
+
+    searchBox.addEventListener('input', () => {
+      const filtro = searchBox.value.toLowerCase();
+      blocks.forEach(block => {
+        const titulo = block.getAttribute('data-title').toLowerCase();
+        block.style.display = titulo.includes(filtro) ? 'block' : 'none';
+      });
+    });
+
+    // Menu toggle
+    const toggleBtn = document.getElementById('menuToggle');
+    const menuList = document.getElementById('menuList');
+
+    toggleBtn.addEventListener('click', () => {
+      menuList.style.display = menuList.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Fecha o menu após clicar num link
+    document.querySelectorAll('#menuList a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuList.style.display = 'none';
+      });
+    });
+
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+
+    // Seleciona todas as imagens com classe centered
+    document.querySelectorAll('img.centered').forEach(img => {
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', () => {
+        modalImage.src = img.src;    
+        modal.classList.add('open'); 
+      });
+    });
+
+    // Fecha o modal ao clicar fora da imagem (no overlay)
+    modal.addEventListener('click', e => {
+      if (e.target === modal) {
+        modal.classList.remove('open');
+        modalImage.src = ""; // limpa a imagem ao fechar (opcional)
+      }
+    });
+  </script>
+</body>
+</html>

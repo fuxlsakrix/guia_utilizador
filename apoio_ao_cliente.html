@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Documentação Zoho Books</title>
+  <style>
+    :root {
+      --cor-primaria: #2d6cdf;
+      --cor-fundo: #f0f4f8;
+      --cor-texto: #333;
+      --cor-bloco: #ffffff;
+      --borda: 1px solid #ccc;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--cor-fundo);
+      color: var(--cor-texto);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      padding: 20px 0 10px;
+      background-color: var(--cor-primaria);
+      color: white;
+      font-size: 28px;
+    }
+
+    p {
+      color: white;
+      font-size: 20px;
+      text-align: center;
+      background-color: var(--cor-primaria);
+      margin: 0;
+      padding-bottom: 20px;
+    }
+
+    /* Menu lateral */
+    #sideMenu {
+  position: fixed;
+  top: 8px; /* mais perto do topo */
+  left: 16px;
+  z-index: 1000;
+}
+
+
+    #menuToggle {
+      font-size: 22px;
+      background-color: var(--cor-primaria);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 14px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    #menuList {
+      list-style: none;
+      padding: 10px;
+      margin: 10px 0 0 0;
+      background-color: white;
+      border: var(--borda);
+      border-radius: 8px;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    #menuList li {
+      margin: 10px 0;
+    }
+
+    #menuList a {
+      text-decoration: none;
+      color: var(--cor-primaria);
+      font-weight: bold;
+    }
+
+    #menuList a:hover {
+      text-decoration: underline;
+    }
+
+    /* Barra de pesquisa */
+    #searchBox {
+      display: block;
+      margin: 30px auto 10px;
+      padding: 12px;
+      font-size: 18px;
+      width: 80%;
+      max-width: 800px;
+      border-radius: 8px;
+      border: var(--borda);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+    }
+
+    /* Blocos de conteúdo */
+    .content-block {
+      font-size: 18px;
+      text-align: left;
+      padding: 20px;
+      margin: 30px auto;
+      width: 90%;
+      max-width: 800px;
+      background-color: var(--cor-bloco);
+      border-radius: 12px;
+      border: var(--borda);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .content-block strong {
+      display: block;
+      font-weight: bold;
+      font-size: 22px;
+      margin-bottom: 14px;
+      color: var(--cor-primaria);
+    }
+
+    /* Imagens */
+    img.centered {
+      width: 100%;
+      max-width: 700px;
+      display: block;
+      margin: 20px auto 0;
+      border-radius: 10px;
+      border: 1px solid #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Menu -->
+  <div id="sideMenu">
+    <button id="menuToggle">☰</button>
+    <ul id="menuList">
+      <li><a href="menu_principal.html">Menu</a></li>
+      <li><a href="itens.html">Itens</a></li>
+      <li><a href="banca.html">Banca</a></li>
+      <li><a href="compras.html">Compras</a></li>
+      <li><a href="contabilista.html">Contabilista</a></li>
+      <li><a href="controlo_de_tempo.html">Controlo de Tempo</a></li>
+      <li><a href="documentos.html">Documentos</a></li>
+      <li><a href="relatorios.html">Relatórios</a></li>
+      <li><a href="vendas.html">Vendas</a></li>
+    </ul>
+  </div>
+
+  <!-- Cabeçalho -->
+  <h1>Documentação digital de apoio ao utilizador</h1>
+
+  <!-- Barra de pesquisa -->
+  <input type="text" id="searchBox" placeholder="Filtrar conteúdo por título..." />
+
+  <!-- Conteúdo -->
+  <div class="content-block" data-title="Apoio ao Cliente" id="principal">
+    <strong>Apoio ao Cliente</strong>
+    O apoio ao cliente está disponível de segunda a sexta-feira e inclui chamadas gratuitas.<br>
+
+    <br>🇪🇸&nbsp;Espanha: <strong>+34 918 368 598</strong>
+    <br>🇫🇷&nbsp;França: <strong>+33 805 542 462</strong> 
+    <br>🇳🇱&nbsp;Países Baixos: <strong>+31 707 007 083</strong>
+    <br>🇩🇪&nbsp;Alemanha: <strong>+49 800 022 9966</strong>  
+    <br>🇬🇧&nbsp;Reino Unido: <strong>+44 800 085 6099</strong>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Filtro da barra de pesquisa
+    const searchBox = document.getElementById('searchBox');
+    const blocks = document.querySelectorAll('.content-block');
+
+    searchBox.addEventListener('input', () => {
+      const filtro = searchBox.value.toLowerCase();
+      blocks.forEach(block => {
+        const titulo = block.getAttribute('data-title').toLowerCase();
+        block.style.display = titulo.includes(filtro) ? 'block' : 'none';
+      });
+    });
+
+    // Alternar visibilidade do menu
+    const toggleBtn = document.getElementById('menuToggle');
+    const menuList = document.getElementById('menuList');
+
+    toggleBtn.addEventListener('click', () => {
+      menuList.style.display = menuList.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Fecha o menu ao clicar num link
+    document.querySelectorAll('#menuList a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuList.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
